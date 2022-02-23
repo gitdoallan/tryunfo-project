@@ -8,7 +8,7 @@ class Form extends React.Component {
       cardRare, cardTrunfo,
       hasTrunfo, isSaveButtonDisabled, onInputChange, onSaveButtonClick } = this.props;
     return (
-      <div>
+      <form onSubmit={ onSaveButtonClick }>
         <FormInputs
           value={ cardName }
           description="Nome da carta"
@@ -81,7 +81,6 @@ class Form extends React.Component {
             <option value="normal">normal</option>
             <option value="raro">raro</option>
             <option value="muito raro">muito raro</option>
-            <option value="selecione">Selecione</option>
           </select>
         </label>
         <br />
@@ -109,7 +108,7 @@ class Form extends React.Component {
           Salvar
         </button>
         {hasTrunfo}
-      </div>
+      </form>
     );
   }
 }

@@ -1,24 +1,40 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import data from './data';
 
 class App extends React.Component {
   constructor() {
     super();
     this.inputHandler = this.inputHandler.bind(this);
-    this.saveCard = this.saveCard.bind(this);
+    this.validation = this.validation.bind(this);
+    this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.state = {
       isSaveButtonDisabled: true,
       hasTrunfo: false,
       cardTrunfo: false,
-      cardRare: 'selecione',
+      cardRare: 'normal',
       cardImage: '',
       cardAttr3: '',
       cardAttr2: '',
       cardAttr1: '',
       cardDescription: '',
       cardName: '',
+      myData: data,
     };
+  }
+
+  onSaveButtonClick(event) {
+    event.preventDefault();
+    this.setState(() => ({
+      cardRare: 'normal',
+      cardImage: '',
+      cardAttr3: 0,
+      cardAttr2: 0,
+      cardAttr1: 0,
+      cardDescription: '',
+      cardName: '',
+    }));
   }
 
   inputHandler(event) {
@@ -55,18 +71,13 @@ class App extends React.Component {
     }
   }
 
-  saveCard() {
-    console.log('salvando');
-  }
-
   render() {
     const { isSaveButtonDisabled, hasTrunfo, cardTrunfo, cardRare, cardImage,
-      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName } = this.state;
+      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, myData } = this.state;
 
     return (
       <div>
         <h1>Tryunfo</h1>
-
         <Form
           cardName={ cardName }
           cardDescription={ cardDescription }
@@ -79,7 +90,8 @@ class App extends React.Component {
           hasTrunfo={ hasTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
           onInputChange={ this.inputHandler }
-          onSaveButtonClick={ this.saveCard }
+          onSaveButtonClick={ this.onSaveButtonClick }
+          theState={ this.state }
         />
 
         <Card
@@ -92,6 +104,10 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
+
+        <div className="addedCards">
+          { myData }
+        </div>
 
       </div>
     );
