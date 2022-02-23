@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from './components/Form';
+import Card from './components/Card';
 
 class App extends React.Component {
   constructor() {
@@ -9,12 +10,12 @@ class App extends React.Component {
     this.state = {
       isSaveButtonDisabled: true,
       hasTrunfo: false,
-      cardTrunfo: true,
+      cardTrunfo: false,
       cardRare: 'normal',
       cardImage: '',
-      cardAttr3: 0,
-      cardAttr2: 0,
-      cardAttr1: 0,
+      cardAttr3: '',
+      cardAttr2: '',
+      cardAttr1: '',
       cardDescription: '',
       cardName: '',
     };
@@ -26,6 +27,10 @@ class App extends React.Component {
       const itsfalse = false;
       this.setState(() => ({
         cardTrunfo: cardTrunfo ? itsfalse : true,
+      }));
+    } else {
+      this.setState(() => ({
+        [event.target.name]: event.target.value,
       }));
     }
   }
@@ -41,6 +46,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>Tryunfo</h1>
+
         <Form
           cardName={ cardName }
           cardDescription={ cardDescription }
@@ -55,6 +61,18 @@ class App extends React.Component {
           onInputChange={ this.inputHandler }
           onSaveButtonClick={ this.saveCard }
         />
+
+        <Card
+          cardName={ cardName }
+          cardDescription={ cardDescription }
+          cardAttr1={ cardAttr1 }
+          cardAttr2={ cardAttr2 }
+          cardAttr3={ cardAttr3 }
+          cardImage={ cardImage }
+          cardRare={ cardRare }
+          cardTrunfo={ cardTrunfo }
+        />
+
       </div>
     );
   }
