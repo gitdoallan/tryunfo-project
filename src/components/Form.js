@@ -1,25 +1,14 @@
 import React from 'react';
+import PropType from 'prop-types';
 import FormInputs from './FormInputs';
 
 class Form extends React.Component {
-  constructor() {
-    super();
-    this.formHandler = this.formHandler.bind(this);
-    this.state = {
-      checked: false,
-    };
-  }
-
-  formHandler() {
-    console.log('handler');
-  }
-
   render() {
-    const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage, 
+    const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
       cardRare, cardTrunfo,
       hasTrunfo, isSaveButtonDisabled, onInputChange, onSaveButtonClick } = this.props;
 
-    const { checked } = this.state;
+    console.log(hasTrunfo);
 
     return (
       <div>
@@ -102,11 +91,12 @@ class Form extends React.Component {
         <label htmlFor="checkboxInput">
           CheckBox:
           <input
+            value={ cardTrunfo }
+            checked={ cardTrunfo }
             data-testid="trunfo-input"
             type="checkbox"
             id="checkboxInput"
             name="checked"
-            checked={ checked }
             onChange={ onInputChange }
           />
         </label>
@@ -124,5 +114,20 @@ class Form extends React.Component {
     );
   }
 }
+
+Form.propTypes = {
+  cardName: PropType.string.isRequired,
+  cardDescription: PropType.string.isRequired,
+  cardAttr1: PropType.number.isRequired,
+  cardAttr2: PropType.number.isRequired,
+  cardAttr3: PropType.number.isRequired,
+  cardImage: PropType.string.isRequired,
+  cardRare: PropType.string.isRequired,
+  cardTrunfo: PropType.bool.isRequired,
+  hasTrunfo: PropType.bool.isRequired,
+  isSaveButtonDisabled: PropType.bool.isRequired,
+  onInputChange: PropType.func.isRequired,
+  onSaveButtonClick: PropType.func.isRequired,
+};
 
 export default Form;
