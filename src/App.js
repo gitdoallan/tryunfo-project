@@ -11,7 +11,7 @@ class App extends React.Component {
       isSaveButtonDisabled: true,
       hasTrunfo: false,
       cardTrunfo: false,
-      cardRare: 'normal',
+      cardRare: 'selecione',
       cardImage: '',
       cardAttr3: '',
       cardAttr2: '',
@@ -31,12 +31,32 @@ class App extends React.Component {
     } else {
       this.setState(() => ({
         [event.target.name]: event.target.value,
+      }), () => this.validation());
+    }
+  }
+
+  validation() {
+    const { cardImage,
+      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, cardRare } = this.state;
+    const limit90 = 90;
+    const limit210 = 210;
+    const sumCard = parseFloat(cardAttr1) + parseFloat(cardAttr2) + parseFloat(cardAttr3);
+    if (cardName.length === 0 || cardDescription.length === 0 || cardAttr1 < 0
+      || cardAttr1 > limit90 || cardAttr2 < 0 || cardAttr2 > limit90
+      || cardAttr3 < 0 || cardAttr3 > limit90 || sumCard > limit210
+      || cardImage.length === 0 || cardRare === 'selecione') {
+      this.setState(() => ({
+        isSaveButtonDisabled: true,
+      }));
+    } else {
+      this.setState(() => ({
+        isSaveButtonDisabled: false,
       }));
     }
   }
 
   saveCard() {
-    console.log('saveCard');
+    console.log('salvando');
   }
 
   render() {

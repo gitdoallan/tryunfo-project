@@ -7,9 +7,6 @@ class Form extends React.Component {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
       cardRare, cardTrunfo,
       hasTrunfo, isSaveButtonDisabled, onInputChange, onSaveButtonClick } = this.props;
-
-    console.log(hasTrunfo);
-
     return (
       <div>
         <FormInputs
@@ -84,6 +81,7 @@ class Form extends React.Component {
             <option value="normal">normal</option>
             <option value="raro">raro</option>
             <option value="muito raro">muito raro</option>
+            <option value="selecione">Selecione</option>
           </select>
         </label>
         <br />
@@ -110,6 +108,7 @@ class Form extends React.Component {
         >
           Salvar
         </button>
+        {hasTrunfo}
       </div>
     );
   }
