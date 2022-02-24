@@ -179,13 +179,13 @@ class App extends React.Component {
               <option value="todas">todas</option>
               <option value="normal">normal</option>
               <option value="raro">raro</option>
-              <option value="muitoRaro">muito raro</option>
+              <option value="muito raro">muito raro</option>
             </select>
           </label>
         </div>
         <div className="addedCards">
           {data.filter((element) => element.cardName.includes(searchInput))
-            .filter((element) => element.cardRare.includes(selectRare))
+            .filter((element) => element.cardRare === selectRare || !selectRare)
             .map((element) => (
               <CardAdded
                 key={ `key-${element.cardName}` }
