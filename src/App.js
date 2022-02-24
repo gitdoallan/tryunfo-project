@@ -12,12 +12,14 @@ class App extends React.Component {
     this.checkTrunfo = this.checkTrunfo.bind(this);
     this.removeCard = this.removeCard.bind(this);
     this.filterCard = this.filterCard.bind(this);
+    this.filterCardRare = this.filterCardRare.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.state = {
       isSaveButtonDisabled: true,
       hasTrunfo: false,
       cardTrunfo: false,
       searchInput: '',
+      selectRare: 'todas',
       cardRare: 'normal',
       cardImage: '',
       cardAttr3: '',
@@ -90,7 +92,7 @@ class App extends React.Component {
       cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, cardRare } = this.state;
     const limit90 = 90;
     const limit210 = 210;
-    const sumCard = parseFloat(cardAttr1) + parseFloat(cardAttr2) + parseFloat(cardAttr3);
+    const sumCard = +cardAttr1 + +cardAttr2 + +cardAttr3; // + = parseFloat() - Dica do @emersonAlvees
     if (cardName.length === 0 || cardDescription.length === 0 || cardAttr1 < 0
       || cardAttr1 > limit90 || cardAttr2 < 0 || cardAttr2 > limit90
       || cardAttr3 < 0 || cardAttr3 > limit90 || sumCard > limit210
@@ -109,9 +111,15 @@ class App extends React.Component {
     this.setState(() => ({ searchInput: event.target.value }));
   }
 
+  filterCardRare(event) {
+    console.log(event.target.value);
+    this.setState(() => ({ selectRare: event.target.value }));
+  }
+
   render() {
     const { isSaveButtonDisabled, hasTrunfo, cardTrunfo, cardRare, cardImage, searchInput,
-      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, data } = this.state;
+      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, data,
+      selectRare } = this.state;
 
     return (
       <div>
@@ -154,6 +162,23 @@ class App extends React.Component {
             testId="name-filter"
             onChange={ this.filterCard }
           />
+          <br />
+          <br />
+          <label htmlFor="selectRare">
+            Raridade:
+            <select
+              onChange={ this.filterCardRare }
+              data-testid="rare-filter"
+              name="cardRareFilter"
+              id="selectRare"
+              value={ selectRare }
+            >
+              <option value="todas">todas</option>
+              <option value="normal">normal</option>
+              <option value="raro">raro</option>
+              <option value="muito raro">muito raro</option>
+            </select>
+          </label>
         </div>
 
         <div className="addedCards">
