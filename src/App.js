@@ -14,10 +14,12 @@ class App extends React.Component {
     this.filterCard = this.filterCard.bind(this);
     this.filterCardRare = this.filterCardRare.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
+    this.trunfoFilterChange = this.trunfoFilterChange.bind(this);
     this.state = {
       isSaveButtonDisabled: true,
       hasTrunfo: false,
       cardTrunfo: false,
+      trunfoFilter: false,
       searchInput: '',
       selectRare: '',
       cardRare: 'normal',
@@ -87,6 +89,16 @@ class App extends React.Component {
     }
   }
 
+  trunfoFilterChange(event) {
+    if (event.target.type === 'checkbox') {
+      const { trunfoFilter } = this.state;
+      const itsfalse = false;
+      this.setState(() => ({
+        trunfoFilter: trunfoFilter ? itsfalse : true,
+      }));
+    }
+  }
+
   validation() {
     const { cardImage,
       cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, cardRare } = this.state;
@@ -122,7 +134,7 @@ class App extends React.Component {
   render() {
     const { isSaveButtonDisabled, hasTrunfo, cardTrunfo, cardRare, cardImage, searchInput,
       cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, data,
-      selectRare } = this.state;
+      selectRare, trunfoFilter } = this.state;
 
     return (
       <div>
@@ -182,24 +194,53 @@ class App extends React.Component {
               <option value="muito raro">muito raro</option>
             </select>
           </label>
+
+          <label htmlFor="checkboxInput">
+            Super Trunfo
+            <input
+              value={ trunfoFilter }
+              checked={ trunfoFilter }
+              data-testid="trunfo-filter"
+              type="checkbox"
+              id="trunfoFilter"
+              onChange={ this.trunfoFilterChange }
+            />
+          </label>
+
         </div>
         <div className="addedCards">
-          {data.filter((element) => element.cardName.includes(searchInput))
-            .filter((element) => element.cardRare === selectRare || !selectRare)
-            .map((element) => (
-              <CardAdded
-                key={ `key-${element.cardName}` }
-                cardName={ element.cardName }
-                cardDescription={ element.cardDescription }
-                cardAttr1={ element.cardAttr1 }
-                cardAttr2={ element.cardAttr2 }
-                cardAttr3={ element.cardAttr3 }
-                cardImage={ element.cardImage }
-                cardRare={ element.cardRare }
-                cardTrunfo={ element.cardTrunfo }
-                removeCard={ this.removeCard }
-              />
-            ))}
+          {trunfoFilter
+            ? data.filter((element) => element.cardTrunfo === true)
+              .map((element) => (
+                <CardAdded
+                  key={ `key-${element.cardName}` }
+                  cardName={ element.cardName }
+                  cardDescription={ element.cardDescription }
+                  cardAttr1={ element.cardAttr1 }
+                  cardAttr2={ element.cardAttr2 }
+                  cardAttr3={ element.cardAttr3 }
+                  cardImage={ element.cardImage }
+                  cardRare={ element.cardRare }
+                  cardTrunfo={ element.cardTrunfo }
+                  removeCard={ this.removeCard }
+                />
+              ))
+            : data.filter((element) => element.cardName.includes(searchInput))
+              .filter((element) => element.cardRare === selectRare || !selectRare)
+              .map((element) => (
+                <CardAdded
+                  key={ `key-${element.cardName}` }
+                  cardName={ element.cardName }
+                  cardDescription={ element.cardDescription }
+                  cardAttr1={ element.cardAttr1 }
+                  cardAttr2={ element.cardAttr2 }
+                  cardAttr3={ element.cardAttr3 }
+                  cardImage={ element.cardImage }
+                  cardRare={ element.cardRare }
+                  cardTrunfo={ element.cardTrunfo }
+                  removeCard={ this.removeCard }
+                />
+              ))}
         </div>
 
       </div>
