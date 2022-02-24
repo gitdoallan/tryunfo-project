@@ -8,6 +8,7 @@ class App extends React.Component {
     super();
     this.inputHandler = this.inputHandler.bind(this);
     this.validation = this.validation.bind(this);
+    this.checkTrunfo = this.checkTrunfo.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.state = {
       isSaveButtonDisabled: true,
@@ -20,21 +21,37 @@ class App extends React.Component {
       cardAttr1: '',
       cardDescription: '',
       cardName: '',
-      myData: data,
     };
   }
 
   onSaveButtonClick(event) {
     event.preventDefault();
+    data.push(this.state);
+
+    this.checkTrunfo();
+
     this.setState(() => ({
+      isSaveButtonDisabled: true,
       cardRare: 'normal',
       cardImage: '',
-      cardAttr3: 0,
-      cardAttr2: 0,
-      cardAttr1: 0,
+      cardAttr3: '0',
+      cardAttr2: '0',
+      cardAttr1: '0',
       cardDescription: '',
       cardName: '',
     }));
+  }
+
+  checkTrunfo() {
+    const { cardTrunfo, hasTrunfo } = this.state;
+    if (hasTrunfo) {
+      return true;
+    }
+    if (cardTrunfo === true) {
+      this.setState(() => ({
+        hasTrunfo: true,
+      }));
+    }
   }
 
   inputHandler(event) {
@@ -72,8 +89,9 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(data);
     const { isSaveButtonDisabled, hasTrunfo, cardTrunfo, cardRare, cardImage,
-      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, myData } = this.state;
+      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName } = this.state;
 
     return (
       <div>
@@ -106,7 +124,19 @@ class App extends React.Component {
         />
 
         <div className="addedCards">
-          { myData }
+          {data.map((element) => (
+            <Card
+              key={ `key-${element.cardName}` }
+              cardName={ element.cardName }
+              cardDescription={ element.cardDescription }
+              cardAttr1={ element.cardAttr1 }
+              cardAttr2={ element.cardAttr2 }
+              cardAttr3={ element.cardAttr3 }
+              cardImage={ element.cardImage }
+              cardRare={ element.cardRare }
+              cardTrunfo={ element.cardTrunfo }
+            />
+          ))}
         </div>
 
       </div>
