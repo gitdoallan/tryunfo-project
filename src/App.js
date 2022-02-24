@@ -210,18 +210,18 @@ class App extends React.Component {
         </div>
         <div className="addedCards">
           {trunfoFilter
-            ? data.filter((element) => element.cardTrunfo === true)
-              .map((element) => (
+            ? data.filter((e) => e.cardTrunfo === true)
+              .map((e) => (
                 <CardAdded
-                  key={ `key-${element.cardName}` }
-                  cardName={ element.cardName }
-                  cardDescription={ element.cardDescription }
-                  cardAttr1={ element.cardAttr1 }
-                  cardAttr2={ element.cardAttr2 }
-                  cardAttr3={ element.cardAttr3 }
-                  cardImage={ element.cardImage }
-                  cardRare={ element.cardRare }
-                  cardTrunfo={ element.cardTrunfo }
+                  key={ `key-${e.cardName}` }
+                  cardName={ e.cardName }
+                  cardDescription={ e.cardDescription }
+                  cardAttr1={ e.cardAttr1 }
+                  cardAttr2={ e.cardAttr2 }
+                  cardAttr3={ e.cardAttr3 }
+                  cardImage={ e.cardImage }
+                  cardRare={ e.cardRare }
+                  cardTrunfo={ e.cardTrunfo }
                   removeCard={ this.removeCard }
                 />
               ))
@@ -242,7 +242,6 @@ class App extends React.Component {
                 />
               ))}
         </div>
-
       </div>
     );
   }
