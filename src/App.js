@@ -1,7 +1,6 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
-import data from './data';
 
 class App extends React.Component {
   constructor() {
@@ -21,12 +20,14 @@ class App extends React.Component {
       cardAttr1: '',
       cardDescription: '',
       cardName: '',
+      data: [],
     };
   }
 
   onSaveButtonClick(event) {
     event.preventDefault();
-    data.push(this.state);
+    const currentState = this.state;
+    this.setState((acc) => ({ data: [...acc.data, currentState] }));
 
     this.checkTrunfo();
 
@@ -40,6 +41,10 @@ class App extends React.Component {
       cardDescription: '',
       cardName: '',
     }));
+  }
+
+  removeCard(event) {
+    console.log(event.target.name);
   }
 
   checkTrunfo() {
@@ -89,9 +94,8 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(data);
     const { isSaveButtonDisabled, hasTrunfo, cardTrunfo, cardRare, cardImage,
-      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName } = this.state;
+      cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, data } = this.state;
 
     return (
       <div>
@@ -135,6 +139,7 @@ class App extends React.Component {
               cardImage={ element.cardImage }
               cardRare={ element.cardRare }
               cardTrunfo={ element.cardTrunfo }
+              removeCard={ this.removeCard }
             />
           ))}
         </div>

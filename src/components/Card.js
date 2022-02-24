@@ -5,7 +5,7 @@ import './Card.css';
 class Card extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
-      cardRare, cardTrunfo } = this.props;
+      cardRare, cardTrunfo, removeCard } = this.props;
 
     return (
       <div className="card">
@@ -17,12 +17,14 @@ class Card extends React.Component {
         <span data-testid="attr3-card">{cardAttr3}</span>
         <span data-testid="rare-card">{cardRare}</span>
         {cardTrunfo ? <span data-testid="trunfo-card">Super Trunfo</span> : ''}
+        <button name={ cardName } type="button" onClick={ removeCard }>Apagar</button>
       </div>
     );
   }
 }
 
 Card.propTypes = {
+  removeCard: PropType.func.isRequired,
   cardName: PropType.string.isRequired,
   cardDescription: PropType.string.isRequired,
   cardAttr1: PropType.string.isRequired,
