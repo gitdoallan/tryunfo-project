@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import CardAdded from './components/CardAdded';
 
 class App extends React.Component {
   constructor() {
@@ -8,6 +9,7 @@ class App extends React.Component {
     this.inputHandler = this.inputHandler.bind(this);
     this.validation = this.validation.bind(this);
     this.checkTrunfo = this.checkTrunfo.bind(this);
+    this.removeCard = this.removeCard.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.state = {
       isSaveButtonDisabled: true,
@@ -40,11 +42,18 @@ class App extends React.Component {
       cardAttr1: '0',
       cardDescription: '',
       cardName: '',
+      cardTrunfo: false,
     }));
   }
 
   removeCard(event) {
-    console.log(event.target.name);
+    const selectedName = event.target.name;
+    const isTrunfo = event.target.id;
+    const { data } = this.state;
+    this.setState({ data: data.filter((element) => element.cardName !== selectedName) });
+    if (isTrunfo === 'trunfo') {
+      this.setState({ hasTrunfo: false });
+    }
   }
 
   checkTrunfo() {
@@ -129,7 +138,7 @@ class App extends React.Component {
 
         <div className="addedCards">
           {data.map((element) => (
-            <Card
+            <CardAdded
               key={ `key-${element.cardName}` }
               cardName={ element.cardName }
               cardDescription={ element.cardDescription }

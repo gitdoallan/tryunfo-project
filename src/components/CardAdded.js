@@ -2,10 +2,10 @@ import React from 'react';
 import PropType from 'prop-types';
 import './Card.css';
 
-class Card extends React.Component {
+class CardAdded extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
-      cardRare, cardTrunfo } = this.props;
+      cardRare, cardTrunfo, removeCard } = this.props;
 
     return (
       <div className="card">
@@ -17,12 +17,22 @@ class Card extends React.Component {
         <span data-testid="attr3-card">{cardAttr3}</span>
         <span data-testid="rare-card">{cardRare}</span>
         {cardTrunfo ? <span data-testid="trunfo-card">Super Trunfo</span> : ''}
+        <button
+          data-testid="delete-button"
+          name={ cardName }
+          id={ cardTrunfo ? 'trunfo' : 'regular' }
+          type="button"
+          onClick={ removeCard }
+        >
+          Excluir
+        </button>
       </div>
     );
   }
 }
 
-Card.propTypes = {
+CardAdded.propTypes = {
+  removeCard: PropType.func.isRequired,
   cardName: PropType.string.isRequired,
   cardDescription: PropType.string.isRequired,
   cardAttr1: PropType.string.isRequired,
@@ -33,4 +43,4 @@ Card.propTypes = {
   cardTrunfo: PropType.bool.isRequired,
 };
 
-export default Card;
+export default CardAdded;
