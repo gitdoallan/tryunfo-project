@@ -81,7 +81,7 @@ class Form extends React.Component {
             >
               <option value="normal">normal</option>
               <option value="raro">raro</option>
-              <option value="muito raro">muito raro</option>
+              <option value="muitoRaro">muito raro</option>
             </select>
           </label>
           <br />

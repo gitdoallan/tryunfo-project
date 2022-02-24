@@ -19,7 +19,7 @@ class App extends React.Component {
       hasTrunfo: false,
       cardTrunfo: false,
       searchInput: '',
-      selectRare: 'todas',
+      selectRare: '',
       cardRare: 'normal',
       cardImage: '',
       cardAttr3: '',
@@ -112,8 +112,11 @@ class App extends React.Component {
   }
 
   filterCardRare(event) {
-    console.log(event.target.value);
-    this.setState(() => ({ selectRare: event.target.value }));
+    let currentValue = event.target.value;
+    if (currentValue === 'todas') {
+      currentValue = '';
+    }
+    this.setState(() => ({ selectRare: currentValue }));
   }
 
   render() {
@@ -176,13 +179,13 @@ class App extends React.Component {
               <option value="todas">todas</option>
               <option value="normal">normal</option>
               <option value="raro">raro</option>
-              <option value="muito raro">muito raro</option>
+              <option value="muitoRaro">muito raro</option>
             </select>
           </label>
         </div>
-
         <div className="addedCards">
           {data.filter((element) => element.cardName.includes(searchInput))
+            .filter((element) => element.cardRare.includes(selectRare))
             .map((element) => (
               <CardAdded
                 key={ `key-${element.cardName}` }
