@@ -2,6 +2,7 @@ import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
 import CardAdded from './components/CardAdded';
+import SearchInput from './components/SearchInput';
 
 class App extends React.Component {
   constructor() {
@@ -10,11 +11,13 @@ class App extends React.Component {
     this.validation = this.validation.bind(this);
     this.checkTrunfo = this.checkTrunfo.bind(this);
     this.removeCard = this.removeCard.bind(this);
+    this.filterCard = this.filterCard.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.state = {
       isSaveButtonDisabled: true,
       hasTrunfo: false,
       cardTrunfo: false,
+      searchInput: '',
       cardRare: 'normal',
       cardImage: '',
       cardAttr3: '',
@@ -102,8 +105,12 @@ class App extends React.Component {
     }
   }
 
+  filterCard(event) {
+    this.setState(() => ({ searchInput: event.target.value }));
+  }
+
   render() {
-    const { isSaveButtonDisabled, hasTrunfo, cardTrunfo, cardRare, cardImage,
+    const { isSaveButtonDisabled, hasTrunfo, cardTrunfo, cardRare, cardImage, searchInput,
       cardAttr3, cardAttr2, cardAttr1, cardDescription, cardName, data } = this.state;
 
     return (
@@ -136,21 +143,35 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
         />
 
+        <br />
+        <br />
+        <div className="searchCards">
+          <SearchInput
+            value={ searchInput }
+            description="Busca"
+            name="searchName"
+            inputType="text"
+            testId="name-filter"
+            onChange={ this.filterCard }
+          />
+        </div>
+
         <div className="addedCards">
-          {data.map((element) => (
-            <CardAdded
-              key={ `key-${element.cardName}` }
-              cardName={ element.cardName }
-              cardDescription={ element.cardDescription }
-              cardAttr1={ element.cardAttr1 }
-              cardAttr2={ element.cardAttr2 }
-              cardAttr3={ element.cardAttr3 }
-              cardImage={ element.cardImage }
-              cardRare={ element.cardRare }
-              cardTrunfo={ element.cardTrunfo }
-              removeCard={ this.removeCard }
-            />
-          ))}
+          {data.filter((element) => element.cardName.includes(searchInput))
+            .map((element) => (
+              <CardAdded
+                key={ `key-${element.cardName}` }
+                cardName={ element.cardName }
+                cardDescription={ element.cardDescription }
+                cardAttr1={ element.cardAttr1 }
+                cardAttr2={ element.cardAttr2 }
+                cardAttr3={ element.cardAttr3 }
+                cardImage={ element.cardImage }
+                cardRare={ element.cardRare }
+                cardTrunfo={ element.cardTrunfo }
+                removeCard={ this.removeCard }
+              />
+            ))}
         </div>
 
       </div>
